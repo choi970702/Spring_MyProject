@@ -103,7 +103,7 @@
 	}
 	img
 	{
-		width: 30%;
+		width: 100%;
 	}
 	textarea 
 	{
