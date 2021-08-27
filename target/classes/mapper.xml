@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ <mapper namespace="myproject">
+ 	<!-- id 중복 체크 -->
+ 	<select id="id_chk" parameterType="String" resultType="int">
+ 		select count(*) from myproject where id = #{id}
+ 	</select>
+ 	<!-- join -->
+ 	<insert id="join_ok" useGeneratedKeys="true" parameterType="com.ict.vo.MVO">
+ 		<!-- insert into myproject values(myproject_seq.nextval, #{id},#{pw},#{phone},
+		#{mail},#{u_id},#{gender}) -->
+		insert into myproject values(#{idx}, #{id},#{pw},#{phone},
+		#{mail},#{u_id},#{gender})
+ 	</insert>
+ 	<!-- id확인 -->
+ 	<select id="id" parameterType="String" resultType="int">
+ 		select count(*) from myproject where id = #{id}
+ 	</select>
+ 	
+ 	<!-- board 작성 -->
+ 	<insert id="board" useGeneratedKeys="true" parameterType="com.ict.vo.BVO">
+ 		insert into myboard(idx,writer,title,content, board_type, regdate) 
+ 		values(#{idx}, #{writer},#{title},#{content},1,sysdate())
+ 	</insert>
+ 	
+	<!-- board2 작성 -->
+ 	<insert id="board2" useGeneratedKeys="true" parameterType="com.ict.vo.BVO">
+ 		insert into myboard(idx,writer,content, board_type, file_name) 
+ 		values(#{idx}, #{writer},#{content},2,#{file_name})
+ 	</insert>
+ 	
+	<!-- 전체 게시물의 수 -->
+	<select id="count" resultType="int">
+		select count(*) from myboard where board_type = 1
+	</select>
+	
+	<!-- 전체 게시물의 수 -->
+	<select id="count2" resultType="int">
+		select count(*) from myboard where board_type = 2
+	</select>
+	
+ 	
+	<!-- 시작번호와 끝번호를 받아서 해당 리스트 출력   -->
+	<select id="list" parameterType="Map" resultType="com.ict.vo.BVO">	
+		<!-- select * from (
+			select rownum r_num, a.* from (
+				select * from myboard where board_type = 1 order by idx desc
+			) a
+		) where r_num between #{begin} and #{end} -->
+		select * from myboard where board_type = 1 order by idx desc
+	</select>
+	
+	<!-- list2 -->
+	<select id="list2" parameterType="Map" resultType="com.ict.vo.BVO">	
+		<!-- select * from (
+			select rownum r_num, a.* from (
+				select * from myboard where board_type = 2 order by idx desc
+			) a
+		) where r_num between #{begin} and #{end} -->
+		select * from myboard where board_type = 2 order by idx desc
+	</select>
+	
+	<!-- 시작번호와 끝번호를 받아서 해당 리스트 출력   -->
+	<select id="mylist" parameterType="map" resultType="com.ict.vo.BVO">	
+		<!-- select * from (
+			select rownum r_num, a.* from (
+				select * from myboard where board_type = 1 order by idx desc
+			) a
+		) where r_num between #{begin} and #{end} -->
+		select * from myboard where board_type = 1 order by idx desc
+	</select>
+	
+	<!-- 시작번호와 끝번호를 받아서 해당 리스트 출력   -->
+	<select id="mylist2" parameterType="String" resultType="com.ict.vo.BVO">	
+		select title from myboard where writer = #{id} and board_type = 1 order by idx desc
+	</select>
+	
+	<!-- 시작번호와 끝번호를 받아서 해당 리스트 출력   -->
+	<select id="foodlist" parameterType="String" resultType="com.ict.vo.VO">	
+		select restaurant from myproject_vo where id = #{id}
+	</select>
+	
+	
+	
+	<select id="master" parameterType="com.ict.vo.MVO" resultType="int">
+		select count(*) from myproject where id = #{id} and pw = #{pw} and u_id = 0
+	</select>
+	
+	<select id="id_pwchk" parameterType="com.ict.vo.MVO" resultType="int">
+		select count(*) from myproject where id = #{id} and pw = #{pw} and u_id = #{u_id}
+	</select>
+	
+	<select id="idfind" parameterType="com.ict.vo.MVO" resultType="String">
+		select id from myproject where phone = #{phone} and mail = #{mail} and pw = #{pw}
+	</select>
+	
+	<select id="pwfind" parameterType="com.ict.vo.MVO" resultType="String">
+		select pw from myproject where phone = #{phone} and mail = #{mail} and id = #{id}
+	</select>
+	
+	<!-- 수정전 -->
+	<select id="oneList" parameterType="String" resultType="com.ict.vo.BVO">
+		select * from myboard where idx = #{idx}
+	</select>
+	
+	<update id="up_list" parameterType="com.ict.vo.BVO">
+		update myboard set title = #{title}, content = #{content} where idx = #{idx}
+	</update>
+	
+	<delete id="del" parameterType="String">
+		delete from myboard where idx = #{idx}
+	</delete>
+	
+	<delete id="del_food" parameterType="String">
+		delete from myproject_vo where id = #{id}
+	</delete>
+	
+	<update id="pw_up" parameterType="com.ict.vo.MVO">
+		update myproject set pw = #{pw} where id = #{id}
+	</update>
+	
+	<update id="phone_up" parameterType="com.ict.vo.MVO">
+		update myproject set phone = #{phone} where id = #{id}
+	</update>
+	
+	<insert id="vo" parameterType="com.ict.vo.VO">
+		insert into myproject_vo values(#{id}, #{Food_name},#{restaurant},#{place},
+		#{phone},#{home},#{restaurant_time},#{file_name}, 0,0,#{menupan})
+	</insert>
+	
+	<select id="selectvo" parameterType="com.ict.vo.VO" resultType="com.ict.vo.VO">
+		select * from myproject_vo where id = #{id} and restaurant = #{restaurant}
+	</select>
+	
+	<select id="FVOlist" parameterType="String" resultType="com.ict.vo.FVO">
+		<!-- select * from (
+			select rownum r_num, a.* from (
+				select * from myfood order by idx desc
+			) a
+		) where r_num between #{begin} and #{end} -->
+		select * from myfood where restaurant = #{restaurant} order by food_star desc
+	</select>
+	
+	<!-- <insert id="FVOinsert" parameterType="com.ict.vo.FVO">
+		insert into myfood(idx,writer,content,restaurant,food_star,food_like) 
+ 		values(myfood_seq.nextval, #{writer},#{content},#{restaurant},#{food_star},#{food_like})
+	</insert> -->
+	
+	<!-- idx값 -->
+	<insert id="FVOinsert" useGeneratedKeys="true" parameterType="com.ict.vo.FVO">
+		insert into myfood(idx,writer,content,restaurant,food_star,food_like) 
+ 		values(#{idx}, #{writer},#{content},#{restaurant},#{food_star},#{food_like})
+	</insert>
+	
+	<select id="FVOone" parameterType="String" resultType="com.ict.vo.FVO">
+		select * from myfood where idx = #{idx}
+	</select>
+	
+	<select id="star" parameterType="String" resultType="int">
+		select sum(food_star) from myfood where restaurant = #{restaurant}
+	</select>
+	
+	<select id="like" parameterType="String" resultType="int">
+		select sum(food_like) from myfood where restaurant = #{restaurant}
+	</select>
+	
+	<select id="FVO_count" parameterType="String" resultType="int">
+		select count(*) from myfood where restaurant = #{restaurant}
+	</select>
+	
+	<update id="star_like" parameterType="com.ict.vo.VO">
+		update myproject_vo set food_star = #{star}, food_like = #{like} where restaurant = #{restaurant}
+	</update>
+	
+	<select id="main" resultType="com.ict.vo.VO">
+		select * from myproject_vo order by food_star desc limit 2;
+	</select>
+	
+	<select id="main2" resultType="com.ict.vo.VO">
+		select * from myproject_vo order by food_like desc limit 2;
+	</select>
+	
+	<select id="choice1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant = #{search}
+	</select>
+	
+	<select id="choice2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name = #{search}
+	</select>
+	
+	<select id="star1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant LIKE '%'||#{restaurant}||'%' order by food_star desc limit 2;
+	</select>
+	
+	<select id="like1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant LIKE '%'||#{restaurant}||'%' order by food_like desc limit 2;
+	</select>
+	
+	<select id="search1" parameterType="map" resultType="com.ict.vo.VO">
+		select * from myproject_vo where place LIKE '%'||#{place}||'%' or 
+		place like CONCAT('%',#{str2},'%') and restaurant LIKE '%'||#{restaurant}||'%'
+	</select>
+	
+	<select id="star2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name LIKE '%'||#{Food_name}||'%' order by food_star desc limit 2;
+	</select>
+	
+	<select id="like2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name LIKE '%'||#{Food_name}||'%' order by food_like desc limit 2;
+	</select>
+	
+	<select id="search2" parameterType="map" resultType="com.ict.vo.VO">
+		select * from myproject_vo where place LIKE '%'||#{place}||'%' or 
+		place like CONCAT('%',#{str2},'%') and Food_name LIKE '%'||#{Food_name}||'%'
+	</select>
+	
+	
+	
+	
+	<!-- <select id="star1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant like CONCAT('%',#{restaurant},'%') order by food_star desc limit 2;
+	</select>
+	
+	<select id="like1" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where restaurant like CONCAT('%',#{restaurant},'%') order by food_like desc limit 2;
+	</select>
+	
+	<select id="search1" parameterType="map" resultType="com.ict.vo.VO">
+		select * from myproject_vo where place like CONCAT('%',#{str},'%') or 
+		place like CONCAT('%',#{str2},'%') and restaurant like CONCAT('%',#{restaurant},'%')
+	</select>
+	
+	<select id="star2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name like CONCAT('%',#{Food_name},'%') order by food_star desc limit 2;
+	</select>
+	
+	<select id="like2" parameterType="String" resultType="com.ict.vo.VO">
+		select * from myproject_vo where Food_name like CONCAT('%',#{Food_name},'%') order by food_like desc limit 2;
+	</select>
+	
+	<select id="search2" parameterType="map" resultType="com.ict.vo.VO">
+		select * from myproject_vo where place like CONCAT('%',#{str},'%') or 
+		place like CONCAT('%',#{str2},'%') and Food_name like CONCAT('%',#{Food_name},'%')
+	</select> -->
+	
+	
+</mapper>
+ 
+ 
+
+
+
+
+
+
+
