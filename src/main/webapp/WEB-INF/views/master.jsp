@@ -36,6 +36,12 @@
 	{
 		location.href="main.do?cPage=${cPage}";
 	}
+	function letter(f) {
+		location.href="letter.do?cPage=${cPage}&id="+f;
+	}
+	function del_master(f) {
+		location.href="del_master.do?cPage=${cPage}&id="+f;
+	}
 </script>
 </head>
 <body>
@@ -47,26 +53,27 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="3"><h3><a>회원관리</a></h3></th>
+					<th colspan="4"><h3><a>회원관리</a></h3></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
-					<c:when test="${empty list}">
-				 	  <tr><td colspan="3"><h2>원하시는 자료가 존재하지 않습니다</h2></td></tr>
-				 	  <tr><td colspan="3">예시)</td></tr>
-				 	  <tr>
-				 	  	<td style="width: 50%;">회원 1</td>
-						<td><button onclick="">쪽지 쓰기</button></td>
-						<td><button onclick="">삭제</button></td>
-				 	  </tr>
+					<c:when test="${empty list1}">
+				 	  <tr><td colspan="4"><h2>원하시는 자료가 존재하지 않습니다</h2></td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="k" items="${list}" varStatus="vs">
+						<c:forEach var="k" items="${list1}" varStatus="vs">
 							<tr>
 								<td style="width: 50%;">${k.id }<td>
-								<td><button onclick="">쪽지 쓰기</button></td>
-								<td><button onclick="">삭제</button></td>
+								<td>
+									<input type="button" onclick="letter(${k.id})" value="쪽지 쓰기">
+								</td>
+								<td>
+									<input type="button" onclick="del_master(${k.id})" value="삭제">
+								</td>
+								<td>
+									<input type="hidden" name="cPage" value="${cPage }">
+								</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
@@ -130,20 +137,18 @@
 			</thead>
 			<tbody>
 				<c:choose>
-					<c:when test="${empty list}">
-				 	  <tr><td colspan="3"><h2>원하시는 자료가 존재하지 않습니다</h2></td></tr>
-				 	  <tr><td colspan="3">예시)</td></tr>
-				 	  <tr>
-				 	  	<td style="width: 50%;">게시판</td>
-						<td><button onclick="">답글 쓰기</button></td>
-						<td><button onclick="">삭제</button></td>
-				 	  </tr>
+					<c:when test="${empty list2}">
+				 	  <tr><td colspan="5"><h2>원하시는 자료가 존재하지 않습니다</h2></td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="k" items="${list}" varStatus="vs">
+						<tr>
+							<th>글쓴이</th><th>제목</th>
+						</tr>
+						<c:forEach var="k" items="${list2}" varStatus="vs">
 							<tr>
-								<td style="width: 50%;">${k.id }<td>
-								<td><button onclick="">쪽지 쓰기</button></td>
+								<td style="width: 50%;">${k.writer }<td>
+								<td style="width: 50%;">${k.title }<td>
+								<td><button onclick="">답글 쓰기</button></td>
 								<td><button onclick="">삭제</button></td>
 							</tr>
 						</c:forEach>

@@ -83,7 +83,8 @@
 	}
 	img
 	{
-		width: 45%;
+		width: 100%;
+		height: 100%;
 	}
 	#field_left
 	{
@@ -97,6 +98,36 @@
 		width: 45%;
 		margin: auto;
 		text-align: center;
+	}
+		table,th,td
+	{
+		border: 1px solid gray;
+		border-spacing: 0px;
+		padding: 1%;
+	}
+	tr 
+	{
+		
+	    text-align:center;
+	    padding:4px 10px;
+	    background-color: #F6F6F6;
+	    margin: 0px;
+	}
+	
+	th 
+	{
+		width:120px;
+	    text-align:center;
+	    padding:4px 10px;
+	    background-color: silver;
+	    margin: 0px;
+	}
+	table 
+	{
+		margin: auto;
+		margin-top: 5%;
+		width: 80%;
+		height: 350px;
 	}
 </style>
 <script type="text/javascript">
@@ -138,180 +169,195 @@
 					<input id="search" type="text" name="search" placeholder="음식이나 가게이름을 쓰세요.">
 				</c:when>
 				<c:otherwise>
-					<input id="search" type="text" name="search" placeholder="${search }">
+					<input id="search" type="text" name="search" placeholder="${search }" required>
 				</c:otherwise>
 			</c:choose>
 			<input type="radio" name="choose" value="거리순">거리순
 			<input type="radio" name="choose" value="리뷰순">리뷰순
 			<input type="radio" name="choose" value="별점순" checked="checked">별점이 높은 순
 			<input type="submit" value="검색">
+			<input type="hidden" name="cPage" value="${cPage }">
 		</form>
 	</div>
 	
 	<div>
 		<fieldset id="field">
-			<legend>가게이름, ${choose }</legend>
-			<c:choose>
-				<c:when test="${choice == '가게이름' }">
-					<c:choose>
-						<c:when test="${!empty search}">
-							<table>
-								<thead>
-									<tr>
-										<th></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-
-									<c:choose>
-										<c:when test="${choose == '거리순'}">
-											<c:forEach var="k" items="${list2}" varStatus="vs">
-												<tr>
-													<td rowspan="4" style="text-align: left;"><img alt=""
-														src="resources/image/${k.file_name }"></td>
-													<td>가게이름 : <a
-														href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
-													</td>
-												</tr>
-												<tr>
-													<td>주메뉴 : ${k.food_name }</td>
-												</tr>
-												<tr>
-													<td>영업 시간 : ${k.restaurant_time }</td>
-												</tr>
-												<tr>
-													<td>위치 : ${k.place }</td>
-												</tr>
-											</c:forEach>
-										</c:when>
-										<c:when test="${choose == '별점순' }">
-											<c:forEach var="k" items="${list3}" varStatus="vs">
-												<tr>
-													<td rowspan="4" style="text-align: left;"><img alt=""
-														src="resources/image/${k.file_name }"></td>
-													<td>가게이름 : <a
-														href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
-													</td>
-												</tr>
-												<tr>
-													<td>주메뉴 : ${k.food_name }</td>
-												</tr>
-												<tr>
-													<td>영업 시간 : ${k.restaurant_time }</td>
-												</tr>
-												<tr>
-													<td>위치 : ${k.place }</td>
-												</tr>
-											</c:forEach>
-										</c:when>
-										<c:when test="${choose == '리뷰순' }">
-											<c:forEach var="k" items="${list4}" varStatus="vs">
-												<tr>
-													<td rowspan="4" style="text-align: left;"><img alt=""
-														src="resources/image/${k.file_name }"></td>
-													<td>가게이름 : <a
-														href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
-													</td>
-												</tr>
-												<tr>
-													<td>주메뉴 : ${k.food_name }</td>
-												</tr>
-												<tr>
-													<td>영업 시간 : ${k.restaurant_time }</td>
-												</tr>
-												<tr>
-													<td>위치 : ${k.place }</td>
-												</tr>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<c:forEach var="k" items="${list}" varStatus="vs">
-												<tr>
-													<td rowspan="4" style="text-align: left;"><img alt=""
-														src="resources/image/${k.file_name }"></td>
-													<td>가게이름 : <a
-														href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
-													</td>
-												</tr>
-												<tr>
-													<td>주메뉴 : ${k.food_name }</td>
-												</tr>
-												<tr>
-													<td>영업 시간 : ${k.restaurant_time }</td>
-												</tr>
-												<tr>
-													<td>위치 : ${k.place }</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
-							</table>
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="k" items="${list}" varStatus="vs">
-								<tr>
-									<td rowspan="4" style="text-align: left;"><img alt=""
-										src="resources/image/${k.file_name }"></td>
-									<td>가게이름 : <a
-										href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
-									</td>
-								</tr>
-								<tr>
-									<td>주메뉴 : ${k.food_name }</td>
-								</tr>
-								<tr>
-									<td>영업 시간 : ${k.restaurant_time }</td>
-								</tr>
-								<tr>
-									<td>위치 : ${k.place }</td>
-								</tr>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-
-				</c:otherwise>
-			</c:choose>
+			<legend>${choice }, ${choose }</legend>
 			<fieldset id="field_left">
+				<legend>음식이름</legend>
+				<table>
 				<c:choose>
-					<c:when test="${choice == '음식이름'}">
-
+					<c:when test="${choose == '거리순' }">
+						<c:forEach var="k" items="${list5}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:when test="${choose == '별점순' }">
+						<c:forEach var="k" items="${list6}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:when test="${choose == '리뷰순' }">
+						<c:forEach var="k" items="${list7}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
 					</c:when>
 					<c:otherwise>
-
+						<c:forEach var="k" items="${list8}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-				<legend>음식이름, ${choose }</legend>
-				<div>
-					<img alt="" src="resources/image/pic1.jpg" onclick="imgclick1()">
-					<textarea cols="" rows="10">
-						~~~~~~~~~~~~~~~~~~~~~~~
-					</textarea>
-				</div>
-				<div>
-					<img alt="" src="resources/image/pic2.jpg" onclick="imgclick2()">
-					<textarea cols="" rows="10">
-						~~~~~~~~~~~~~~~~~~~~~~~
-					</textarea>
-				</div>
+				
+				</table>
 			</fieldset>
 			<fieldset id="field_right">
-				<div>
-					<img alt="" src="resources/image/pic3.jpg" onclick="imgclick3()">
-					<textarea cols="" rows="10">
-						~~~~~~~~~~~~~~~~~~~~~~~
-					</textarea>
-				</div>
-				<div>
-					<img alt="" src="resources/image/pic_trulli.jpg"
-						onclick="imgclick4()">
-					<textarea cols="" rows="10">
-						~~~~~~~~~~~~~~~~~~~~~~~
-					</textarea>
-				</div>
+			<legend>가게이름</legend>
+			<table>
+				<c:choose>
+					<c:when test="${choose == '거리순' }">
+						<c:forEach var="k" items="${list2}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:when test="${choose == '별점순' }">
+						<c:forEach var="k" items="${list3}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:when test="${choose == '리뷰순' }">
+						<c:forEach var="k" items="${list4}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="k" items="${list}" varStatus="vs">
+							<tr>
+								<td rowspan="4" style="text-align: left;"><img alt=""
+									src="resources/image/${k.file_name }"></td>
+								<td>가게이름 : <a
+									href="onelist.do?id=${k.id}&cPage=${cPage}&restaurant=${k.restaurant}">${k.restaurant }</a>
+								</td>
+							</tr>
+							<tr>
+								<td>주메뉴 : ${k.food_name }</td>
+							</tr>
+							<tr>
+								<td>영업 시간 : ${k.restaurant_time }</td>
+							</tr>
+							<tr>
+								<td>위치 : ${k.place }</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				
+				</table>
 			</fieldset>
 		</fieldset>
 	</div>

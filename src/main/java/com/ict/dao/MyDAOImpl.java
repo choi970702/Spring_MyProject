@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ict.vo.AVO;
 import com.ict.vo.BVO;
 import com.ict.vo.FVO;
 import com.ict.vo.MVO;
@@ -234,10 +235,9 @@ public class MyDAOImpl implements MyDAO
 	}
 	
 	@Override
-	public List<VO> selectSearch1(String str, String str2, String restaurant) throws Exception {
+	public List<VO> selectSearch1(String str, String restaurant) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("str", str);
-		map.put("str2", str2);
 		map.put("restaurant", restaurant);
 		return sqlSessionTemplate.selectList("myproject.search1", map);
 	}
@@ -254,12 +254,40 @@ public class MyDAOImpl implements MyDAO
 	}
 
 	@Override
-	public List<VO> selectSearch2(String str, String str2, String food_name) throws Exception {
+	public List<VO> selectSearch2(String str, String food_name) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("str", str);
-		map.put("str2", str2);
 		map.put("food_name", food_name);
 		return sqlSessionTemplate.selectList("myproject.search2", map);
 	}
+
+	
+	
+	
+	
+	@Override
+	public List<MVO> selectMasterList1() throws Exception {
+		return sqlSessionTemplate.selectList("myproject.masterlist1");
+	}
+
+	@Override
+	public List<BVO> selectMasterList2() throws Exception {
+		return sqlSessionTemplate.selectList("myproject.masterlist2");
+	}
+
+	@Override
+	public List<AVO> selectMasterList3() throws Exception {
+		return sqlSessionTemplate.selectList("myproject.masterlist3");
+	}
+
+	@Override
+	public int insertMaster1(AVO avo) throws Exception {
+		return sqlSessionTemplate.insert("myproject.masterinsert1", avo);
+	}
+	
+	
+	
+	
+	
 	
 }

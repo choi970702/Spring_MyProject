@@ -161,6 +161,7 @@
 				<input class="in" type="text" placeholder="음식이름" name="search" required>
 				<input class="btn" type="submit" value="검색">
 				<input type="hidden" name="choice" value="음식이름">
+				<input type="hidden" name="cPage" value="${cPage }">
 			</form>
 		</div>
 		<div class="div_in">
@@ -169,6 +170,7 @@
 				<input class="in" type="text" placeholder="가게이름" name="search" required>
 				<input class="btn" type="submit" value="검색">
 				<input type="hidden" name="choice" value="가게이름">
+				<input type="hidden" name="cPage" value="${cPage }">
 			</form>
 		</div>
 		<div>

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.service.MyService;
 import com.ict.service.Paging;
+import com.ict.vo.AVO;
 import com.ict.vo.BVO;
 import com.ict.vo.FVO;
 import com.ict.vo.MVO;
@@ -87,9 +88,17 @@ public class MyController
 				mv.addObject("list", list);
 			}else if(choice == "음식이름")
 			{
-				List<VO> list = myservice.selectchoice2(search);
-				mv.addObject("list", list);
+				List<VO> list8 = myservice.selectchoice2(search);
+				mv.addObject("list8", list8);
 
+			}else
+			{
+				List<VO> list = myservice.selectMain();
+				List<VO> list8 = myservice.selectMain2();
+				
+				mv.addObject("list", list);
+				mv.addObject("list8", list8);
+				mv.addObject("cPage", cPage);
 			}
 			return mv;
 			
@@ -106,32 +115,35 @@ public class MyController
 		ModelAndView mv = new ModelAndView("search");
 		String choice = request.getParameter("choice");
 		String choose = request.getParameter("choose");
+		String search = request.getParameter("search");
 		
 		String start = (String)session.getAttribute("msg");
-		String str = start.substring(0,10);
-		String str2 = start.substring(0,14);
+		String str = start.substring(0,14);
 		System.out.println(str);
-		System.out.println(str2);
 		
 		try {
 			if (request.getParameter("choice") == "거리순") {
-				List<VO> list2 = myservice.selectSearch1(str,str2,request.getParameter("search"));
+				List<VO> list2 = myservice.selectSearch1(str,request.getParameter("search"));
 				List<VO> list3 = myservice.selectstar1(request.getParameter("search"));
 				List<VO> list4 = myservice.selectlike1(request.getParameter("search"));
+				List<VO> list = myservice.selectchoice(search);
 				
+				mv.addObject("list", list);
 				mv.addObject("list2", list2);
 				mv.addObject("list3", list3);
 				mv.addObject("list4", list4);
 				
 			}else
 			{
-				List<VO> list5 = myservice.selectSearch2(str,str2,request.getParameter("search"));
+				List<VO> list5 = myservice.selectSearch2(str,request.getParameter("search"));
 				List<VO> list6 = myservice.selectstar2(request.getParameter("search"));
 				List<VO> list7 = myservice.selectlike2(request.getParameter("search"));
+				List<VO> list8 = myservice.selectchoice2(search);
 				
 				mv.addObject("list5", list5);
 				mv.addObject("list6", list6);
 				mv.addObject("list7", list7);
+				mv.addObject("list8", list8);
 			}
 			
 			
@@ -879,13 +891,28 @@ public class MyController
 	}
 	
 	@RequestMapping("master_ok.do")
-	public ModelAndView master_okCommand(HttpServletRequest request)
+	public ModelAndView master_okCommand(HttpServletRequest request, @ModelAttribute("cPage")String cPage)
 	{
 		ModelAndView mv = new ModelAndView("master");
 		MVO mvo = new MVO();
 		try {
 			mvo.setId(request.getParameter("id"));
 			mvo.setPw(request.getParameter("pw"));
+			
+			List<MVO> list1 = myservice.selectMasterList1();
+			if (list1 != null) {
+				mv.addObject("list1", list1);
+			}
+			List<BVO> list2 = myservice.selectMasterList2();
+			if (list2 != null) {
+				mv.addObject("list2", list2);
+			}
+			List<AVO> list3 = myservice.selectMasterList3();
+			if (list3 != null) {
+				mv.addObject("list3", list3);
+			}
+			
+			
 			int result = myservice.selectMaster(mvo);
 			if (result == 1) 
 			{
@@ -895,6 +922,34 @@ public class MyController
 			{
 				return new ModelAndView("redirect:login.do");
 			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	@RequestMapping("letter.do")
+	public ModelAndView letterCommand(@ModelAttribute("cPage")String cPage, @ModelAttribute("id")String letter_id)
+	{
+		ModelAndView mv = new ModelAndView("letter");
+		mv.addObject("cPage", cPage);
+		mv.addObject("letter_id", letter_id);
+		return mv;
+	}
+	
+	@RequestMapping("letter_ok.do")
+	public ModelAndView letter_okCommand(HttpServletRequest request, @ModelAttribute("cPage")String cPage)
+	{
+		
+		try {
+			ModelAndView mv = new ModelAndView("master");
+			AVO avo = new AVO();
+			avo.setId(request.getParameter("letter_id"));
+			avo.setTitle(request.getParameter("title"));
+			avo.setContent(request.getParameter("content"));
+			
+			int result = myservice.insertMaster1(avo);
+			return mv;
 		} catch (Exception e) {
 			System.out.println(e);
 		}

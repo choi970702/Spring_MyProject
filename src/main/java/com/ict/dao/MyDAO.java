@@ -2,6 +2,7 @@ package com.ict.dao;
 
 import java.util.List;
 
+import com.ict.vo.AVO;
 import com.ict.vo.BVO;
 import com.ict.vo.FVO;
 import com.ict.vo.MVO;
@@ -127,7 +128,7 @@ public interface MyDAO
 	List<VO> selectlike1(String restaurant) throws Exception;
 	
 	// search 거리
-	List<VO> selectSearch1(String str, String str2, String restaurant) throws Exception;
+	List<VO> selectSearch1(String str, String restaurant) throws Exception;
 	
 	// search star2
 	List<VO> selectstar2(String food_name) throws Exception;
@@ -136,5 +137,20 @@ public interface MyDAO
 	List<VO> selectlike2(String food_name) throws Exception;
 	
 	// search 거리2
-	List<VO> selectSearch2(String str, String str2, String food_name) throws Exception;
+	List<VO> selectSearch2(String str, String food_name) throws Exception;
+	
+	
+	// master list1
+	List<MVO> selectMasterList1() throws Exception;
+	
+	// master list2
+	List<BVO> selectMasterList2() throws Exception;
+	
+	// master list3
+	List<AVO> selectMasterList3() throws Exception;
+	
+	// master insert1
+	int insertMaster1(AVO avo) throws Exception;
+	
+	
 }

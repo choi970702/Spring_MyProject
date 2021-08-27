@@ -184,38 +184,44 @@
 		select * from myproject_vo order by food_like desc limit 2;
 	</select>
 	
+	<!-- 가게이름,   -->
 	<select id="choice1" parameterType="String" resultType="com.ict.vo.VO">
 		select * from myproject_vo where restaurant = #{search}
 	</select>
 	
+	<!-- 음식 이름,  -->
 	<select id="choice2" parameterType="String" resultType="com.ict.vo.VO">
 		select * from myproject_vo where Food_name = #{search}
 	</select>
 	
+	<!-- 가게이름, 별점순 -->
 	<select id="star1" parameterType="String" resultType="com.ict.vo.VO">
 		select * from myproject_vo where restaurant LIKE '%'||#{restaurant}||'%' order by food_star desc limit 2;
 	</select>
 	
+	<!-- 가게이름, 리뷰순  -->
 	<select id="like1" parameterType="String" resultType="com.ict.vo.VO">
 		select * from myproject_vo where restaurant LIKE '%'||#{restaurant}||'%' order by food_like desc limit 2;
 	</select>
 	
+	<!-- 가게이름, 거리순 -->
 	<select id="search1" parameterType="map" resultType="com.ict.vo.VO">
-		select * from myproject_vo where place LIKE '%'||#{place}||'%' or 
-		place like CONCAT('%',#{str2},'%') and restaurant LIKE '%'||#{restaurant}||'%'
+		select * from myproject_vo where place LIKE '%'||#{str}||'%' and restaurant LIKE '%'||#{restaurant}||'%'
 	</select>
 	
+	<!-- 음식이름, 별점순 -->
 	<select id="star2" parameterType="String" resultType="com.ict.vo.VO">
 		select * from myproject_vo where Food_name LIKE '%'||#{Food_name}||'%' order by food_star desc limit 2;
 	</select>
 	
+	<!-- 음식이름, 리뷰순 -->
 	<select id="like2" parameterType="String" resultType="com.ict.vo.VO">
 		select * from myproject_vo where Food_name LIKE '%'||#{Food_name}||'%' order by food_like desc limit 2;
 	</select>
 	
+	<!-- 음식이름, 거리순 -->
 	<select id="search2" parameterType="map" resultType="com.ict.vo.VO">
-		select * from myproject_vo where place LIKE '%'||#{place}||'%' or 
-		place like CONCAT('%',#{str2},'%') and Food_name LIKE '%'||#{Food_name}||'%'
+		select * from myproject_vo where place LIKE '%'||#{str}||'%' and Food_name LIKE '%'||#{Food_name}||'%'
 	</select>
 	
 	
@@ -246,6 +252,24 @@
 		select * from myproject_vo where place like CONCAT('%',#{str},'%') or 
 		place like CONCAT('%',#{str2},'%') and Food_name like CONCAT('%',#{Food_name},'%')
 	</select> -->
+	
+	
+	<select id="masterlist1" resultType="com.ict.vo.MVO">
+		select * from myproject
+	</select>
+	
+	<select id="masterlist2" resultType="com.ict.vo.BVO">
+		select * from myboard
+	</select>
+	
+	<select id="masterlist3" resultType="com.ict.vo.AVO">
+		select * from mymaster
+	</select>
+	
+	<insert id="masterinsert1" useGeneratedKeys="true" parameterType="com.ict.vo.AVO"  >
+		insert into mymaster(idx,id,title,content) 
+ 		values(#{idx}, #{id},#{title},#{content})
+	</insert>
 	
 	
 </mapper>

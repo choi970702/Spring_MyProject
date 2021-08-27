@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ict.dao.MyDAO;
+import com.ict.vo.AVO;
 import com.ict.vo.BVO;
 import com.ict.vo.FVO;
 import com.ict.vo.MVO;
@@ -222,8 +223,8 @@ public class MyServiceImpl implements MyService
 	}
 
 	@Override
-	public List<VO> selectSearch1(String str, String str2, String restaurant) throws Exception {
-		return myDAO.selectSearch1(str, str2, restaurant);
+	public List<VO> selectSearch1(String str, String restaurant) throws Exception {
+		return myDAO.selectSearch1(str, restaurant);
 	}
 	
 	@Override
@@ -237,8 +238,31 @@ public class MyServiceImpl implements MyService
 	}
 
 	@Override
-	public List<VO> selectSearch2(String str, String str2, String food_name) throws Exception {
-		return myDAO.selectSearch2(str, str2, food_name);
+	public List<VO> selectSearch2(String str, String food_name) throws Exception {
+		return myDAO.selectSearch2(str, food_name);
+	}
+
+	
+	
+	
+	@Override
+	public List<MVO> selectMasterList1() throws Exception {
+		return myDAO.selectMasterList1();
+	}
+
+	@Override
+	public List<BVO> selectMasterList2() throws Exception {
+		return myDAO.selectMasterList2();
+	}
+
+	@Override
+	public List<AVO> selectMasterList3() throws Exception {
+		return myDAO.selectMasterList3();
+	}
+
+	@Override
+	public int insertMaster1(AVO avo) throws Exception {
+		return myDAO.insertMaster1(avo);
 	}
 	
 	
